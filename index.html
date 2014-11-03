@@ -18,9 +18,34 @@
 
     </head>
     <body>
-        <main class="container">
+        <main class="container" ng-app="MovieApp" ng-controller="MoviesController">
             <h1>Movies from 2014</h1>
 
+            <p><input type="search" class="form-control"
+                      ng-model="searchString" placeholder= "search for a title"/>
+            </p>
+
+            <p>{{filteredMovies.length}} {{filteredMovies.length = 1 ? 'movie' : 'movies'}}</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th ng-click="sortBy('title')">Title</th>
+                        <th ng-click="sortBy('studio')">Studio</th>
+                        <th ng-click="sortBy('grossSales')">Sales</th>
+                        <th ng-click="sortBy('ticketsSold')">Tickets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <tr ng-repeat="movie in filteredMovies = (movies | filter: {title: searchString} | orderBy: sortCol : sortReverse">
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.studio}}</td>
+                        <td>{{movie.grossSales | currency : '$' : 0}}</td>
+                        <td>{{movie.ticketsSold | number}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </main>
 
         <!-- 2014 movie box office data (http://www.the-numbers.com/market/2014/top-grossing-movies) -->
